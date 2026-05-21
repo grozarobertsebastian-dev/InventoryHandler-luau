@@ -28,4 +28,4 @@ Players can
 Place the module in `ServerScriptService` and require it:
 
 ```lua
-local InvetoryHandler = require(game.ServerScriptService.src.InventoryHandler)
+local InventoryHandler = require(game.ServerScriptService.src.InventoryHandler)
