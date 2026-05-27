@@ -1,27 +1,28 @@
 # InventoryHandler-Luau
 
-A simple Roblox server inventory system for handling character placement, storage, and selling logic.
+A server-side inventory and character management system for Roblox multiplayer games.
 
-This system manages how players interact with their owned characters in slots and storage, including movement, selling, and basic safety checks.
+It handles secure player interactions with owned characters, including placement, storage, selling, and progression-based restrictions.
 
 ## Features
 
-- move characters between slots and storage
-- limit-based storage system per rebirth level
-- sell system with confirmation protection
-- rebirth protection (prevents accidental progression loss)
-- locked / protected character system
-- automatic UI name tags for characters
-- safe server-side validation for all actions
+- slot-based character placement system
+- storage system with rebirth-based limits
+- secure server-side action validation
+- character selling system with economy scaling
+- rebirth protection to prevent progression loss
+- locked / protected character handling
+- dynamic character UI (name tags)
+- remote event validation for all player actions
 
 ## How it works
 
 Players can
 
-- place characters into available slots
+- place characters into unlocked slots
 - move characters into storage
-- sell characters for coins
-- receive warnings if selling affects rebirth requirements
+- sell characters for in-game currency
+- receive warnings when selling affects progression requirements
 
 ## Usage
 
