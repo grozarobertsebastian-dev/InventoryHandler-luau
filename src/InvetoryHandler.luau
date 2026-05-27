@@ -1,12 +1,11 @@
--- InventoryHandler (ServerScriptService)
--- Handles player characters: moving between slots, storage and selling system.
--- Includes rebirth protection logic to prevent accidental progression loss.
+-- inventroy storage and selling handler
+-- rebirth safety checks
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local GD = require(ReplicatedStorage.Shared.GameData)
 
--- Game configuration
+-- game configuration
 local formatNumber        = GD.formatNumber
 local SLOTS_PER_REBIRTH   = GD.SLOTS_PER_REBIRTH
 local STORAGE_PER_REBIRTH = GD.STORAGE_PER_REBIRTH
@@ -16,7 +15,7 @@ local function getStarMultiplier(stars)
 	return GD.getStarMultiplier(stars)
 end
 
--- Player helpers
+-- player helpers
 
 local function getRebirthLevel(player)
 	local ls = player:FindFirstChild("leaderstats")
@@ -63,7 +62,7 @@ local function isCharacterOwnedByPlayer(player, character)
 	return false
 end
 
--- Inventory storage
+-- inventory storage
 
 local function ensureStorage(player)
 	local inv = player:FindFirstChild("Inventory")
@@ -83,7 +82,7 @@ local function ensureStorage(player)
 	return storage
 end
 
--- Character counting
+-- character counting
 
 local function countCharacterOwned(player, charName)
 	local count = 0
@@ -118,7 +117,7 @@ local function countCharacterOwned(player, charName)
 	return count
 end
 
--- Rebirth protection check
+-- rebirth protection check
 
 local function wouldSellBlockRebirth(player, charName)
 	local nextRebirth = getRebirthLevel(player) + 1
@@ -139,7 +138,7 @@ local function wouldSellBlockRebirth(player, charName)
 	return false, 0
 end
 
--- Colors
+-- colors
 
 local ANIME_COLORS = {
 	["Solo Leveling"]=Color3.fromRGB(108,59,245),
@@ -156,7 +155,7 @@ local ANIME_COLORS = {
 local RARITY_COLORS = GD.RARITY_COLORS
 local RARITY_DISPLAY = GD.RARITY_DISPLAY
 
--- NameTag system
+-- nametag system
 
 local function refreshNameTag(character)
 	local charName = character:GetAttribute("CharacterName") or "Unknown"
@@ -210,7 +209,7 @@ local function refreshNameTag(character)
 	income.TextColor3 = Color3.fromRGB(100,255,120)
 end
 
--- Remote events
+-- remote events
 
 local moveToSlotEvent = ReplicatedStorage:FindFirstChild("MoveToSlotEvent")
 local moveToStorageEvent = ReplicatedStorage:FindFirstChild("MoveToStorageEvent")
@@ -227,7 +226,7 @@ sellConfirmResponseEvent.Parent = ReplicatedStorage
 
 local pendingSells = {}
 
--- Move to slot
+-- move to slot ( repaired )
 
 moveToSlotEvent.OnServerEvent:Connect(function(player, character)
 	if not character or not character.Parent then return end
@@ -268,7 +267,7 @@ moveToSlotEvent.OnServerEvent:Connect(function(player, character)
 	notifyEvent:FireClient(player, "Character placed!", "success")
 end)
 
--- Move to storage
+-- move to storage
 
 moveToStorageEvent.OnServerEvent:Connect(function(player, character)
 	if not character or not character.Parent then return end
@@ -282,7 +281,7 @@ moveToStorageEvent.OnServerEvent:Connect(function(player, character)
 	notifyEvent:FireClient(player, "Moved to storage!", "info")
 end)
 
--- Sell system
+-- sell system
 
 local function executeSell(player, character)
 	if not character or not character.Parent then return end
